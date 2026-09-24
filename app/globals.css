@@ -1,26 +1,156 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-ivory: #faf6f0;
+  --color-pearl: #fffdfc;
+  --color-champagne: #d6b47a;
+  --color-champagne-light: #e8d3ab;
+  --color-champagne-dark: #a97f45;
+  --color-blush: #f4dad6;
+  --color-beige: #eedfd5;
+  --color-ink: #2c2420;
+  --color-charcoal: #1a1410;
+  --color-charcoal-2: #241c16;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ivory: var(--color-ivory);
+  --color-pearl: var(--color-pearl);
+  --color-champagne: var(--color-champagne);
+  --color-champagne-light: var(--color-champagne-light);
+  --color-champagne-dark: var(--color-champagne-dark);
+  --color-blush: var(--color-blush);
+  --color-beige: var(--color-beige);
+  --color-ink: var(--color-ink);
+  --color-charcoal: var(--color-charcoal);
+  --color-charcoal-2: var(--color-charcoal-2);
+
+  /* Couple names: Great Vibes · headings: Cormorant Garamond · event titles:
+     Bodoni Moda · Hindi & shlok: Noto Serif Devanagari · small details: DM Sans */
+  --font-display: var(--font-cormorant);
+  --font-serif-alt: var(--font-cormorant);
+  --font-bodoni: var(--font-bodoni);
+  --font-script: var(--font-vibes);
+  --font-hindi: var(--font-devanagari);
+  --font-detail: var(--font-dmsans);
+
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-float-slower: float 14s ease-in-out infinite;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-spin-slow: spin 6s linear infinite;
+  --animate-twinkle: twinkle 3.2s ease-in-out infinite;
+  --animate-pulse-glow: pulse-glow 3.5s ease-in-out infinite;
+  --animate-bloom: bloom 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-flicker: flicker 2.4s ease-in-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+  50% { transform: translateY(-22px) translateX(10px) rotate(6deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 18px 2px rgba(214, 180, 122, 0.35); }
+  50% { box-shadow: 0 0 34px 8px rgba(214, 180, 122, 0.6); }
+}
+@keyframes bloom {
+  0% { transform: scale(0.4) rotate(-15deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+@keyframes flicker {
+  0%, 100% { opacity: 1; transform: scaleY(1); }
+  45% { opacity: 0.75; transform: scaleY(0.94); }
+  55% { opacity: 0.9; transform: scaleY(1.03); }
+}
+
+html {
+  scroll-behavior: auto;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ivory);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+.font-display { font-family: var(--font-display); }
+.font-serif-alt { font-family: var(--font-serif-alt); }
+.font-bodoni { font-family: var(--font-bodoni); }
+.font-script { font-family: var(--font-script); }
+.font-hindi { font-family: var(--font-hindi); }
+.font-detail { font-family: var(--font-detail); }
+
+.gold-shimmer-text {
+  background: linear-gradient(
+    100deg,
+    var(--color-champagne-dark) 20%,
+    var(--color-champagne-light) 40%,
+    #fff6e3 50%,
+    var(--color-champagne-light) 60%,
+    var(--color-champagne-dark) 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-champagne) 35%,
+    var(--color-champagne) 65%,
+    transparent
+  );
+}
+
+.glass-panel {
+  background: rgba(255, 253, 252, 0.55);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid rgba(214, 180, 122, 0.35);
+}
+
+.glass-panel-dark {
+  background: rgba(26, 20, 16, 0.45);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid rgba(214, 180, 122, 0.28);
+}
+
+.film-grain {
+  position: relative;
+  isolation: isolate;
+}
+.film-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44NSIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iMC40NSIvPjwvc3ZnPg==");
+}
+
+::selection {
+  background: var(--color-champagne);
+  color: var(--color-charcoal);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -1,0 +1,293 @@
+/* ------------------------------------------------------------------ */
+/* Cinematic polish — ambient effects, storybook pages, section extras */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --grain-noise: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44NSIgbnVtT2N0YXZlcz0iMiIgc3RpdGNoVGlsZXM9InN0aXRjaCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNuKSIgb3BhY2l0eT0iMC40NSIvPjwvc3ZnPg==");
+}
+
+/* Replace the native scrollbar with the gold lotus progress indicator. */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Warm-ivory grade for raw (not pre-processed) photographs. */
+.warm-grade {
+  filter: sepia(0.12) saturate(1.04) contrast(0.97) brightness(1.03);
+}
+
+/* Mobile safe areas (iPhone Dynamic Island / home indicator). */
+.music-fab {
+  top: max(1rem, calc(env(safe-area-inset-top) + 0.5rem));
+  right: max(1rem, calc(env(safe-area-inset-right) + 0.5rem));
+}
+@media (min-width: 640px) {
+  .music-fab {
+    top: max(1.5rem, calc(env(safe-area-inset-top) + 0.5rem));
+    right: max(1.5rem, calc(env(safe-area-inset-right) + 0.5rem));
+  }
+}
+.scroll-lotus {
+  right: max(0.35rem, env(safe-area-inset-right));
+}
+@media (min-width: 640px) {
+  .scroll-lotus {
+    right: 1.1rem;
+  }
+}
+footer.safe-bottom {
+  padding-bottom: max(3.5rem, calc(env(safe-area-inset-bottom) + 2rem));
+}
+button.safe-bottom {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
+/* Storybook page lift: sections rise in like the pages of a wedding album. */
+.storybook-page {
+  --page-lift: 0;
+  transform-origin: 50% 0%;
+  transform: perspective(1600px) rotateX(calc(var(--page-lift) * 4deg))
+    translate3d(0, calc(var(--page-lift) * 28px), 0);
+}
+.storybook-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 160px;
+  z-index: 30;
+  pointer-events: none;
+  opacity: var(--page-lift);
+  background:
+    linear-gradient(180deg, rgba(44, 36, 32, 0.22), rgba(44, 36, 32, 0.06) 35%, transparent),
+    linear-gradient(90deg, rgba(255, 253, 252, 0.2), transparent 12%, transparent 88%, rgba(44, 36, 32, 0.08));
+}
+
+/* Ambient: drifting paper texture + occasional warm light leak. */
+.paper-drift {
+  opacity: 0.05;
+  background-image: var(--grain-noise);
+  animation: paper-drift 40s linear infinite;
+}
+@keyframes paper-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-24px, 18px, 0); }
+}
+.light-leak {
+  opacity: 0;
+  background:
+    radial-gradient(ellipse 45% 60% at 100% 10%, rgba(255, 186, 120, 0.35), transparent 70%),
+    radial-gradient(ellipse 35% 45% at 0% 90%, rgba(244, 196, 170, 0.25), transparent 70%);
+  animation: light-leak 22s ease-in-out infinite;
+}
+@keyframes light-leak {
+  0%, 62%, 100% { opacity: 0; }
+  74% { opacity: 0.55; }
+  86% { opacity: 0.15; }
+}
+
+/* Floating bokeh */
+.bokeh-light {
+  filter: blur(2px);
+  animation-name: bokeh-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes bokeh-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(18px, -26px, 0) scale(1.08); }
+  66% { transform: translate3d(-14px, -10px, 0) scale(0.94); }
+}
+
+/* Soft moving light rays */
+.light-rays {
+  background: repeating-conic-gradient(
+    from 180deg at 50% 0%,
+    rgba(255, 240, 210, 0) 0deg,
+    rgba(255, 236, 200, 0.55) 4deg,
+    rgba(255, 240, 210, 0) 9deg,
+    rgba(255, 240, 210, 0) 17deg
+  );
+  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 0%, transparent 75%);
+  filter: blur(6px);
+  transform-origin: 50% 0%;
+  animation: rays-sway 18s ease-in-out infinite;
+}
+@keyframes rays-sway {
+  0%, 100% { transform: translateX(-50%) rotate(-4deg); opacity: 0.8; }
+  50% { transform: translateX(-50%) rotate(4deg); opacity: 1; }
+}
+
+/* Gold shimmer glowing behind the couple's names */
+.names-shimmer {
+  border-radius: 9999px;
+  background:
+    linear-gradient(100deg, transparent 25%, rgba(255, 246, 227, 0.9) 45%, rgba(232, 211, 171, 0.7) 55%, transparent 75%),
+    radial-gradient(ellipse at center, rgba(214, 180, 122, 0.35), transparent 70%);
+  background-size: 250% 100%, 100% 100%;
+  filter: blur(18px);
+  animation: names-shimmer 5s ease-in-out infinite;
+}
+@keyframes names-shimmer {
+  0% { background-position: 120% 0, 0 0; }
+  100% { background-position: -120% 0, 0 0; }
+}
+
+/* Decorative florals & watercolour */
+.floral-sway {
+  transform-origin: 50% 100%;
+  animation: floral-sway 9s ease-in-out infinite;
+}
+@keyframes floral-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-2.5deg); }
+}
+.watercolor-splash {
+  border-radius: 45% 55% 60% 40% / 50% 40% 60% 50%;
+  filter: blur(24px);
+  animation: splash-morph 16s ease-in-out infinite;
+}
+@keyframes splash-morph {
+  0%, 100% { border-radius: 45% 55% 60% 40% / 50% 40% 60% 50%; transform: scale(1) rotate(0deg); }
+  50% { border-radius: 60% 40% 45% 55% / 40% 60% 45% 55%; transform: scale(1.08) rotate(8deg); }
+}
+
+/* Wedding: temple-bell ripples + diya glow */
+.bell-ripple {
+  transform: translate(-50%, -50%) scale(0.2);
+  opacity: 0;
+  animation: bell-ripple 6s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+}
+@keyframes bell-ripple {
+  0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(1.25); opacity: 0; }
+}
+.diya-glow {
+  background: radial-gradient(circle, rgba(255, 196, 110, 0.55), rgba(255, 170, 80, 0.15) 45%, transparent 70%);
+  filter: blur(4px);
+  animation: diya-glow 2.6s ease-in-out infinite;
+}
+@keyframes diya-glow {
+  0%, 100% { opacity: 0.65; transform: scale(0.92); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+/* Venue */
+.ken-burns {
+  animation: ken-burns 26s ease-in-out infinite alternate;
+}
+@keyframes ken-burns {
+  0% { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.14) translate3d(-2%, -1.5%, 0); }
+}
+.pin-pulse {
+  animation: pin-pulse 1.8s ease-in-out infinite;
+}
+@keyframes pin-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.55; }
+  50% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.25; }
+}
+
+/* Film grain on hover (gallery cards). Hosts are already positioned. */
+.grain-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 0.6s ease;
+  background-image: var(--grain-noise);
+}
+.group:hover .grain-hover::after {
+  opacity: 0.35;
+}
+
+/* Blessings: very soft grain, breathing vignette, glowing Shiv–Parvati */
+.grain-soft {
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: var(--grain-noise);
+  animation: grain-shift 1.2s steps(4) infinite;
+}
+@keyframes grain-shift {
+  0%, 100% { background-position: 0 0; }
+  25% { background-position: -30px 20px; }
+  50% { background-position: 25px -35px; }
+  75% { background-position: -15px -10px; }
+}
+.vignette-breathe {
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(10, 8, 6, 0.75) 100%);
+  animation: vignette-breathe 10s ease-in-out infinite;
+}
+@keyframes vignette-breathe {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+.divine-glow {
+  animation: divine-glow 4.5s ease-in-out infinite;
+}
+@keyframes divine-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(214, 180, 122, 0.35)); }
+  50% { filter: drop-shadow(0 0 18px rgba(232, 211, 171, 0.8)); }
+}
+
+/* Baraat: the little procession strolls across the bottom, left to right */
+.baraat-procession {
+  left: 0;
+  animation: baraat-walk 38s linear infinite;
+}
+@keyframes baraat-walk {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .baraat-procession,
+  .story-film::before,
+  .paper-drift,
+  .light-leak,
+  .bokeh-light,
+  .light-rays,
+  .names-shimmer,
+  .floral-sway,
+  .watercolor-splash,
+  .bell-ripple,
+  .ken-burns,
+  .grain-soft,
+  .vignette-breathe,
+  .divine-glow {
+    animation: none !important;
+  }
+}
+
+/* Love Story: black & white film stills with a soft, always-on grain */
+.story-bw {
+  filter: grayscale(1) contrast(1.06) brightness(1.02);
+}
+.story-film::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: var(--grain-noise);
+  animation: grain-shift 1.2s steps(4) infinite;
+}
